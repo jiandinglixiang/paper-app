@@ -1,0 +1,42 @@
+{
+  "code": "0",
+  "msg": "ok",
+  "data": [
+    {
+      "id": 123,
+      "img": "http://iph.href.lu/200x100?text=轮播展位图1",
+      "content": "一个啊实打实大苏打实打实",
+      "title": "标题内容",
+      "price": 199.12,
+      "LookNumber": 1,
+      "info": {
+        "portrait": "http://iph.href.lu/100x100?text=头像",
+        "name": "用户名称"
+      }
+    },
+    {
+      "id": 123123,
+      "img": "http://iph.href.lu/200x100?text=轮播展位图2",
+      "content": "一个啊实打实大苏打实打实",
+      "title": "标题内容",
+      "price": 199.12,
+      "LookNumber": 1,
+      "info": {
+        "portrait": "http://iph.href.lu/100x100?text=头像",
+        "name": "用户名称"
+      }
+    },
+    {
+      "id": 123453,
+      "img": "http://iph.href.lu/200x100?text=轮播展位图3",
+      "content": "一个啊实打实大苏打实打实",
+      "title": "标题内容",
+      "price": 199.12,
+      "LookNumber": 1,
+      "info": {
+        "portrait": "http://iph.href.lu/100x100?text=头像",
+        "name": "用户名称"
+      }
+    }
+  ]
+}
