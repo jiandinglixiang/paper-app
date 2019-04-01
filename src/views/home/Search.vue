@@ -27,9 +27,9 @@ export default {
   },
   methods: {
     loadMore () {
-      this.getList(parseInt(this.list.length / 10 + 1))
+      this.getList(parseInt(this.list.length / 10))
     },
-    getList (page = 1) {
+    getList (page = 0) {
       this.loading = 'true'
       return http.get('/search.json', {
         search: this.$route.query.search,

@@ -17,40 +17,44 @@
         <img :src="n" alt="">
       </li>
     </ul>
-    <router-link class="leaveA-message" :to="{path:'/publish/leaveAMessage',query:{id:details.id}}">
-      查看留言内容
-    </router-link>
-    <div v-if="logisticsTxt">
-      <div class="odd-info">
-        <mt-cell title="物流信息"></mt-cell>
-        <mt-field type="text"
-                  label="快递单号:"
-                  :disabled="!(addTxt&&isMeOrder===1)"
-                  :placeholder="details.logistics.odd ? details.logistics.odd:`等待发货...`"
-                  v-model="details.logistics.odd"></mt-field>
-        <mt-field type="text"
-                  label="快递名称:"
-                  :disabled="!(addTxt&&isMeOrder===1)"
-                  :placeholder="details.logistics.oddName ? details.logistics.oddName:'如:顺丰'"
-                  v-model="details.logistics.oddName"></mt-field>
-        <div style="margin: 10px">
-          <mt-button v-if="isMeOrder===1&&addTxt" type="primary" size="large"
-                     @click.native="openExpressage">{{details.logistics.odd? '修改物流':`物流发货`}}
-          </mt-button>
-          <mt-button v-else-if="details.status*1===2&&isMeOrder===2" type="primary" size="large"
-                     @click.native="confirmExpressage">确认收货
-          </mt-button>
-        </div>
+    <div v-if="isMeOrder">
+      <div style="text-align: center;padding: 10%;color: black;font-size: 1.5em;" v-if="details.status*1===3">宝贝已下架
       </div>
-      <mt-cell v-if="isMeOrder" title="寄送地址:" :value="details.logistics.location"></mt-cell>
-      <div v-if="isMeOrder" class="info-data">
+      <template v-else-if="isMeOrder&&details.status>0">
+        <div class="odd-info" v-if="logisticsTxt">
+          <mt-cell title="物流信息"></mt-cell>
+          <mt-field :disabled="!(addTxt&&isMeOrder===1)"
+                    :placeholder="details.logistics.odd ? details.logistics.odd:`等待发货...`"
+                    label="快递单号:"
+                    type="text"
+                    v-model="logistics.odd"></mt-field>
+          <mt-field :disabled="!(addTxt&&isMeOrder===1)"
+                    :placeholder="details.logistics.oddName ? details.logistics.oddName:'如:顺丰'"
+                    label="快递名称:"
+                    type="text"
+                    v-model="logistics.oddName"></mt-field>
+          <div style="margin: 10px">
+            <mt-button @click.native="openExpressage" size="large" type="primary"
+                       v-if="isMeOrder===1&&addTxt">{{details.logistics.odd? '修改物流':`物流发货`}}
+            </mt-button>
+            <mt-button @click.native="confirmExpressage" size="large" type="primary"
+                       v-else-if="details.status*1===2&&isMeOrder===2">确认收货
+            </mt-button>
+          </div>
+        </div>
+        <mt-cell :value="details.logistics.location" title="寄送地址:"></mt-cell>
+        <div class="info-data">
         <img :src="details.logistics.portrait" alt="">
         <div>
           <p>购买者: <span>{{details.logistics.name}}</span></p>
           <p>{{details.logistics.phone}}</p>
         </div>
       </div>
+      </template>
     </div>
+    <router-link :to="{path:'/publish/leaveAMessage',query:{id:details.id}}" class="leaveA-message">
+      查看留言内容
+    </router-link>
     <div>
       <mt-button v-if="details.status*1===0&&isMeOrder===1"
                  type="danger"
@@ -98,6 +102,10 @@ export default {
           location: null,
           portrait: null
         }
+      },
+      logistics: {
+        odd: '',
+        oddName: ''
       }
     }
   },
@@ -124,7 +132,13 @@ export default {
     },
     logisticsTxt () {
       // 0代表发布,1代表支付了,2代表发货了,3代表取消发布了,4代表完成,5代表纠纷由后台处理
-      return this.isMeOrder && this.details.status > 0
+      if (this.isMeOrder === 1 && this.details.status > 0) {
+        return true
+      }
+      if (this.isMeOrder === 2 && (this.details.status * 1 === 2 || this.details.status * 1 === 4 || this.details.status * 1 === 5)) {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -133,7 +147,8 @@ export default {
         Toast('请登陆再购买')
         return
       }
-      if (this.details.price < this.info.balance) {
+      console.log(this.details.price > this.info.balance, this.details.price, this.info.balance)
+      if (this.details.price * 1 > this.info.balance) {
         Toast('余额不足')
         return
       }
@@ -158,10 +173,20 @@ export default {
     },
     openExpressage () {
       // 修改物流发货
-      http.get('/amendExpressage', {
-        id: this.$route.query.id
+      if (!this.logistics.odd || !this.logistics.oddName) {
+        Toast('地址输入错误')
+        return
+      }
+      http.post('/amendExpressage', {
+        id: this.$route.query.id,
+        odd: this.logistics.odd,
+        oddName: this.logistics.oddName
       }).then(value => {
         this.getDetails()
+        this.logistics = {
+          odd: '',
+          oddName: ''
+        }
       })
     },
     confirmExpressage () {

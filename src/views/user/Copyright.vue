@@ -34,9 +34,9 @@ export default {
   },
   methods: {
     loadMore () {
-      this.getList(parseInt(this.list.length / 10 + 1))
+      this.getList(parseInt(this.list.length / 10))
     },
-    getList (page = 1) {
+    getList (page = 0) {
       this.loading = 'true'
       return http.get('/publish', {
         publish: '+0', // 0代表发布,1代表支付了,2代表发货了,3代表取消发布了,4代表完成,5代表纠纷由后台处理
