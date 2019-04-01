@@ -1,7 +1,7 @@
 const path = require('path')
 module.exports = {
-  // baseUrl: '/',
-  outputDir: 'dist',
+  // publicPath: './',
+  outputDir: 'APP',
   devServer: {
     host: '127.0.0.1',
     port: 6161,

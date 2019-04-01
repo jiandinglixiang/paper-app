@@ -5,7 +5,7 @@ import { getToken, removeToken } from './token'
 
 export class Http {
   constructor (url) {
-    const baseURL = url || 'http://127.0.0.1/api'
+    const baseURL = url || 'http://237930h98r.zicp.vip/api'
     this.config = {
       baseURL: baseURL,
       timeout: 10000,

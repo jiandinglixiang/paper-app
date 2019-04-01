@@ -9,9 +9,12 @@
       </div>
     </div>
     <p class="details-money">¥{{details.price}}元 <span style="font-size: 0.8em">包邮</span></p>
-    <p class="details-Content"><span>{{details.brandNew>0? '全新':'非全新'}}</span>
-      {{details.content}}
-    </p>
+    <div class="details-Content">
+      <span>{{details.brandNew>0? '全新':'非全新'}}</span>
+      <p>
+        {{details.content}}
+      </p>
+    </div>
     <ul class="img-List">
       <li v-for="(n,index) in details.imgList" :key="index">
         <img :src="n" alt="">
@@ -44,12 +47,12 @@
         </div>
         <mt-cell :value="details.logistics.location" title="寄送地址:"></mt-cell>
         <div class="info-data">
-        <img :src="details.logistics.portrait" alt="">
-        <div>
-          <p>购买者: <span>{{details.logistics.name}}</span></p>
-          <p>{{details.logistics.phone}}</p>
+          <img :src="details.logistics.portrait" alt="">
+          <div>
+            <p>购买者: <span>{{details.logistics.name}}</span></p>
+            <p>{{details.logistics.phone}}</p>
+          </div>
         </div>
-      </div>
       </template>
     </div>
     <router-link :to="{path:'/publish/leaveAMessage',query:{id:details.id}}" class="leaveA-message">
@@ -274,9 +277,13 @@ export default {
 
     .details-Content {
       font-size: 1.3em;
-      margin: 0 10px;
+      padding: 0 10px;
       color: black;
-
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-wrap: break-word;
+      line-height: 1.5em;
       span {
         display: inline-block;
         background-color: red;

@@ -90,11 +90,11 @@ export default {
               list.push({ ...value2 })
             })
           })
-          this.loading = list.length < this.pageSize
           list = neS ? list : (copy(this.list)).concat(list)
           list.sort((l, r) => l.time > r.time)
           this.list = list
           this.original = neS ? data.data : (copy(this.original)).concat(data.data)
+          this.loading = data.data.length < this.pageSize
         } else {
           this.loading = true
         }

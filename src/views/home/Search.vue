@@ -31,10 +31,10 @@ export default {
     },
     getList (page = 0) {
       this.loading = 'true'
-      return http.get('/search.json', {
+      return http.get('/searchList', {
         search: this.$route.query.search,
-        startPage: page,
-        pageSize: this.pageSize
+        offset: page,
+        limit: this.pageSize
       }).then(data => {
         if (data.data && data.data.length) {
           this.loading = data.data.length < this.pageSize
