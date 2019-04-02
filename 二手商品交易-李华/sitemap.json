@@ -19,10 +19,43 @@
 	"pages": [{
 		"webviewId": "__W2A__47.101.221.9", //首页
 		"matchUrls": [{
-			"href": "http://47.101.221.9"
-		}, {
-			"href": "http://47.101.221.9/"
-		}],
+				"href": "http://47.101.221.9"
+			}, {
+				"href": "http://47.101.221.9/"
+			}, {
+				"pathname": "WILDCARD:/publish"
+			},
+			{
+				"pathname": "WILDCARD:/user"
+			},
+			{
+				"pathname": "WILDCARD:/search"
+			},
+			{
+				"pathname": "WILDCARD:/commodity/details"
+			},
+			{
+				"pathname": "WILDCARD:/info/copyright/list"
+			},
+			{
+				"pathname": "WILDCARD:/info/sellsy/list"
+			},
+			{
+				"pathname": "WILDCARD:/info/download/list"
+			},
+			{
+				"pathname": "WILDCARD:/info/amend"
+			},
+			{
+				"pathname": "WILDCARD:/info/bank"
+			},
+			{
+				"pathname": "WILDCARD:/publish/leaveAMessage"
+			},
+			{
+				"pathname": "WILDCARD:/login"
+			}
+		],
 		"webviewParameter": {
 			"titleNView": false,
 			"statusbar": {
