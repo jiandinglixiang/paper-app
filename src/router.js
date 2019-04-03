@@ -11,11 +11,11 @@ export const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '',
       component: Index,
       children: [
         {
-          path: '',
+          path: '/',
           meta: { getInfo: true },
           component: Home
         },
